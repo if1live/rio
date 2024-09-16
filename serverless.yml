@@ -1,0 +1,54 @@
+service: rio
+
+useDotenv: true
+
+plugins:
+  - serverless-git-info
+  - serverless-scriptable-plugin
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+  region: ap-northeast-2
+  stage: ${opt:stage, 'main'}
+
+  memorySize: 512
+  architecture: arm64
+
+  logRetentionInDays: 1
+  versionFunctions: false
+  timeout: 5
+
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
+
+    GIT_COMMIT: ${git:commit}
+    GIT_BRANCH: ${git:branch}
+
+package:
+  individually: true
+  patterns:
+    - "!**"
+    - "!node_modules/**"
+
+functions:
+  httpMain:
+    handler: artifact/http_main.handler
+    package:
+      patterns:
+        - artifact/http_main.mjs*
+        - priv/**/*
+        - static/**/*
+    events:
+      - httpApi: ANY /
+      - httpApi: ANY /{pathname+}
+
+custom:
+  scriptHooks:
+    # https://github.com/weixu365/serverless-scriptable-plugin/issues/49#issuecomment-594383342
+    before:package:createDeploymentArtifacts: pnpm artifact
