@@ -11,7 +11,7 @@
     "build": "tsc",
     "check:watch": "tsc --watch --noEmit",
     "clean": "rimraf dist artifact",
-    "dev": "tsx --env-file=.env.local ./src/dev.ts",
+    "dev": "tsx --env-file=.env ./src/dev.ts",
     "fix": "biome check --write --unsafe  .",
     "lint": "biome check .",
     "test": "vitest"
