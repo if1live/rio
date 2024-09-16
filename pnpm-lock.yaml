@@ -39,9 +39,15 @@ importers:
       '@types/node':
         specifier: ^22.5.5
         version: 22.5.5
+      '@types/sql.js':
+        specifier: ^1.4.9
+        version: 1.4.9
       esbuild:
         specifier: ^0.23.1
         version: 0.23.1
+      kysely-wasm:
+        specifier: ^0.6.3
+        version: 0.6.3(kysely@0.27.4)
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -57,6 +63,9 @@ importers:
       serverless-standalone:
         specifier: ^0.0.15
         version: 0.0.15
+      sql.js:
+        specifier: ^1.11.0
+        version: 1.11.0
       tsx:
         specifier: ^4.19.1
         version: 4.19.1
@@ -1190,6 +1199,9 @@ packages:
   '@types/cacheable-request@6.0.3':
     resolution: {integrity: sha512-IQ3EbTzGxIigb1I3qPZc1rWJnH0BmSKv5QYTalEwweFvyBDLSAe24zP0le/hyi7ecGfZVlIVAg4BZqb8WBwKqw==}
 
+  '@types/emscripten@1.39.13':
+    resolution: {integrity: sha512-cFq+fO/isvhvmuP/+Sl4K4jtU6E23DoivtbO4r50e3odaxAiVdbfSYRDdJ4gCdxx+3aRjhphS5ZMwIH4hFy/Cw==}
+
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
@@ -1213,6 +1225,9 @@ packages:
 
   '@types/responselike@1.0.3':
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
+
+  '@types/sql.js@1.4.9':
+    resolution: {integrity: sha512-ep8b36RKHlgWPqjNG9ToUrPiwkhwh0AEzy883mO5Xnd+cL6VBH1EvSjBAAuxLUFF2Vn/moE3Me6v9E1Lo+48GQ==}
 
   '@types/ws@8.5.12':
     resolution: {integrity: sha512-3tPRkv1EtkDpzlgyKyI8pGsGZAGPEaXeu0DOj5DI25Ja91bdAYddYHbADRYVrZMRbfW+1l5YwXVDKohDJNQxkQ==}
@@ -2296,6 +2311,11 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
+  kysely-wasm@0.6.3:
+    resolution: {integrity: sha512-dA7kkmSkHkDXkpwjAKwc974wguksgV3N3jYq5C1JQmQgDm485UASLIbh+uTYp/rxcP0Nksl2pmdIc5XVDebVuQ==}
+    peerDependencies:
+      kysely: '>=0.26'
+
   kysely@0.27.4:
     resolution: {integrity: sha512-dyNKv2KRvYOQPLCAOCjjQuCk4YFd33BvGdf/o5bC7FiW+BB6snA81Zt+2wT9QDFzKqxKa5rrOmvlK/anehCcgA==}
     engines: {node: '>=14.0.0'}
@@ -2922,6 +2942,9 @@ packages:
   sprintf-kit@2.0.2:
     resolution: {integrity: sha512-lnapdj6W4LflHZGKvl9eVkz5YF0xaTrqpRWVA4cNVOTedwqifIP8ooGImldzT/4IAN5KXFQAyXTdLidYVQdyag==}
     engines: {node: '>=0.12'}
+
+  sql.js@1.11.0:
+    resolution: {integrity: sha512-GsLUDU3vhOo14Pd5ME0y2te49JQyby6HuoCuadevEV+CGgTUjmYRrm7B7lhRyzOgrmcWmspUfyjNb6sOAEqdsA==}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -5336,6 +5359,8 @@ snapshots:
       '@types/node': 22.5.5
       '@types/responselike': 1.0.3
 
+  '@types/emscripten@1.39.13': {}
+
   '@types/estree@1.0.5': {}
 
   '@types/http-cache-semantics@4.0.4': {}
@@ -5359,6 +5384,11 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
+      '@types/node': 22.5.5
+
+  '@types/sql.js@1.4.9':
+    dependencies:
+      '@types/emscripten': 1.39.13
       '@types/node': 22.5.5
 
   '@types/ws@8.5.12':
@@ -6676,6 +6706,10 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
+  kysely-wasm@0.6.3(kysely@0.27.4):
+    dependencies:
+      kysely: 0.27.4
+
   kysely@0.27.4: {}
 
   lazystream@1.0.1:
@@ -7385,6 +7419,8 @@ snapshots:
   sprintf-kit@2.0.2:
     dependencies:
       es5-ext: 0.10.64
+
+  sql.js@1.11.0: {}
 
   stackback@0.0.2: {}
 
