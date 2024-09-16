@@ -20,9 +20,9 @@ importers:
       kysely:
         specifier: ^0.27.4
         version: 0.27.4
-      liquid:
-        specifier: ^5.1.1
-        version: 5.1.1
+      liquidjs:
+        specifier: ^10.16.7
+        version: 10.16.7
       mysql2:
         specifier: ^3.11.3
         version: 3.11.3
@@ -1557,6 +1557,10 @@ packages:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
 
+  commander@10.0.1:
+    resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
+    engines: {node: '>=14'}
+
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
@@ -2348,9 +2352,10 @@ packages:
   lie@3.3.0:
     resolution: {integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==}
 
-  liquid@5.1.1:
-    resolution: {integrity: sha512-GbZhB1kgcDR1NE1FXEGtcK1EjMUXe2+ENgRecjs5V3ksZUjzZdC3leff/FoL4E02/9Y9tdoHY1zJ2QMwb5kuuw==}
-    engines: {node: '>=8'}
+  liquidjs@10.16.7:
+    resolution: {integrity: sha512-vjlBDyPxFgUc6vJB+TbAMcxKKKcm4Ee0rj9Je9lcG1I0lr9xvtHgB/ZdNMNAgsPUvJLkLfdrKRd+KzQ5opPfNg==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   lodash.defaults@4.2.0:
     resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
@@ -3005,10 +3010,6 @@ packages:
 
   stream-promise@3.2.0:
     resolution: {integrity: sha512-P+7muTGs2C8yRcgJw/PPt61q7O517tDHiwYEzMWo1GSBCcZedUMT/clz7vUNsSxFphIlJ6QUL4GexQKlfJoVtA==}
-
-  strftime@0.9.2:
-    resolution: {integrity: sha512-wu4xPBupxILrTO8TPaQRSTG7UOEWPhk232QXK3cdTejPeTWsXRpIMkgGF1JKnPY4OHNKYWUa//k0crofghxAFA==}
-    engines: {node: '>=0.2.0'}
 
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -5839,6 +5840,8 @@ snapshots:
     dependencies:
       delayed-stream: 1.0.0
 
+  commander@10.0.1: {}
+
   commander@2.20.3: {}
 
   commander@4.1.1: {}
@@ -6781,9 +6784,9 @@ snapshots:
     dependencies:
       immediate: 3.0.6
 
-  liquid@5.1.1:
+  liquidjs@10.16.7:
     dependencies:
-      strftime: 0.9.2
+      commander: 10.0.1
 
   lodash.defaults@4.2.0: {}
 
@@ -7520,8 +7523,6 @@ snapshots:
       2-thenable: 1.0.0
       es5-ext: 0.10.64
       is-stream: 1.1.0
-
-  strftime@0.9.2: {}
 
   string-width@4.2.3:
     dependencies:

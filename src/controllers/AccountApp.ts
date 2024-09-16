@@ -1,10 +1,16 @@
 import { Hono } from "hono";
 import * as R from "remeda";
 import { z } from "zod";
+import { engine } from "../instances/engine.js";
 import { NamuhClient } from "../services/index.js";
 import { settings } from "../settings/index.js";
 
 export const router = new Hono();
+
+router.get("/index", async (c) => {
+  const html = engine.renderFile("account_index");
+  return c.html(html);
+});
 
 router.get("/query/s8202/:accountIndex", async (c) => {
   const schema = z.object({
