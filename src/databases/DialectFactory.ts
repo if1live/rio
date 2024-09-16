@@ -1,4 +1,6 @@
+import { MysqlDialect } from "kysely";
 import { SqlJsDialect } from "kysely-wasm";
+import type MysqlPkg from "mysql2";
 import type SqlJsPkg from "sql.js";
 
 // kysely는 db를 생성하는 함수를 dialect 생성 시점에 넣을 수 있다.
@@ -19,9 +21,23 @@ const createEngine_sqljs = (
   };
 };
 
+type MysqlParameters = Parameters<typeof MysqlPkg.createPool>;
+const createEngine_mysql = (
+  ...args: MysqlParameters
+): CreateEngineFn<MysqlPkg.Pool> => {
+  const [opts] = args;
+  return async () => {
+    // do not use 'mysql2/promises'!
+    // mysql2/promise 사용시 hang 발생!
+    const { createPool } = await import("mysql2");
+    return createPool(opts);
+  };
+};
+
 type Args_Generic<Tag, Input> = { _tag: Tag; input: Input };
 type Args_SqlJs = Args_Generic<"sqljs", SqlJsParameters>;
-type Args = Args_SqlJs;
+type Args_Mysql = Args_Generic<"mysql", MysqlParameters>;
+type Args = Args_SqlJs | Args_Mysql;
 
 /**
  * better-sqlite3는 네이티브 플러그인이라서 node.js 버전을 바꾼다거나 꼬인다.
@@ -35,10 +51,41 @@ export const create_sqljs = (data: ArrayLike<number> | null) => {
   return dialect;
 };
 
+const create_mysql = (options: MysqlPkg.PoolOptions) => {
+  const fn = createEngine_mysql(options);
+  const dialect = new MysqlDialect({ pool: fn });
+  return dialect;
+};
+
 const parse_sqljs = (url: URL): Args_SqlJs => {
   return {
     _tag: "sqljs",
     input: [new Uint8Array([])],
+  };
+};
+
+const parse_mysql = (url: URL): Args_Mysql => {
+  const isAwsLambda = !!process.env.LAMBDA_TASK_ROOT;
+  const connectionLimit = isAwsLambda ? 1 : 5;
+
+  const database = url.pathname.replace("/", "");
+  const port: number | undefined =
+    url.port !== "" ? Number.parseInt(url.port, 10) : undefined;
+
+  const opts: MysqlParameters[0] = {
+    database,
+    host: url.hostname,
+    user: url.username,
+    password: url.password,
+    port,
+    connectionLimit,
+    charset: "utf8mb4",
+    timezone: "+00:00",
+  };
+
+  return {
+    _tag: "mysql",
+    input: [opts],
   };
 };
 
@@ -48,6 +95,8 @@ export const parse = (input: string): Args => {
     switch (url.protocol) {
       case "sqljs:":
         return parse_sqljs(url);
+      case "mysql:":
+        return parse_mysql(url);
       default:
         throw new Error(`Unsupported database URL: ${url.href}`);
     }
@@ -56,10 +105,14 @@ export const parse = (input: string): Args => {
   }
 };
 
-export const fromConnectionString = (input: string) => {
+export const fromConnectionString = (
+  input: string,
+): SqlJsDialect | MysqlDialect => {
   const parsed = parse(input);
   switch (parsed._tag) {
     case "sqljs":
       return create_sqljs(...parsed.input);
+    case "mysql":
+      return create_mysql(...parsed.input);
   }
 };

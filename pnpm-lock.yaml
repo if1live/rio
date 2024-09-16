@@ -23,6 +23,9 @@ importers:
       liquid:
         specifier: ^5.1.1
         version: 5.1.1
+      mysql2:
+        specifier: ^3.11.3
+        version: 3.11.3
       remeda:
         specifier: ^2.12.1
         version: 2.12.1
@@ -1372,6 +1375,10 @@ packages:
     resolution: {integrity: sha512-/F2YC+DlsY3UBM2Bdnh5RLHOPNibS/+IcjUuhP8XuctyrN+MlL+fWDAiela32LTDk7hMy4rx8MTgvbJ+0blO5g==}
     engines: {node: '>= 10.0.0'}
 
+  aws-ssl-profiles@1.1.2:
+    resolution: {integrity: sha512-NZKeq9AfyQvEeNlN0zSYAaWrmBffJh3IELMZfRpJVWgrpEbtEpnjvzqBPf+mxoI287JohRDoa+/nsfqqiZmF6g==}
+    engines: {node: '>= 6.0.0'}
+
   axios@1.7.7:
     resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
 
@@ -1694,6 +1701,10 @@ packages:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
 
+  denque@2.1.0:
+    resolution: {integrity: sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==}
+    engines: {node: '>=0.10'}
+
   dezalgo@1.0.4:
     resolution: {integrity: sha512-rXSP0bf+5n0Qonsb+SVVfNfIsimO4HEtmnIpPHY8Q1UCzKlQrDMfdobr8nJOOsRgWCyMRqeSBQzmWUMq7zvVig==}
 
@@ -1976,6 +1987,9 @@ packages:
   functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
 
+  generate-function@2.3.1:
+    resolution: {integrity: sha512-eeB5GfMNeevm/GRYq20ShmsaGcmI81kIX2K9XQx5miC8KdHaC6Jm0qQ8ZNeGOi7wYB8OsdxKs+Y2oVuTFuVwKQ==}
+
   get-func-name@2.0.2:
     resolution: {integrity: sha512-8vXOvuE167CtIc3OyItco7N/dpRtBbYOsPsXCz7X/PMnlGjYjSGuZJgM1Y7mmew7BKf9BqvLX2tnOVy1BBUsxQ==}
 
@@ -2100,6 +2114,10 @@ packages:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
 
+  iconv-lite@0.6.3:
+    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
+    engines: {node: '>=0.10.0'}
+
   ieee754@1.1.13:
     resolution: {integrity: sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==}
 
@@ -2209,6 +2227,9 @@ packages:
 
   is-promise@2.2.2:
     resolution: {integrity: sha512-+lP4/6lKUBfQjZ2pdxThZvLUAafmZb8OAxFb8XXtiQmS35INgr85hdOGoEs124ez1FCnZJt6jau/T+alh58QFQ==}
+
+  is-property@1.0.2:
+    resolution: {integrity: sha512-Ks/IoX00TtClbGQr4TWXemAnktAQvYB7HzcCxDGqEZU6oCmb2INHuOoKxbtR+HFkmYWBKv/dOZtGRiAjDhj92g==}
 
   is-regex@1.1.4:
     resolution: {integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==}
@@ -2365,6 +2386,9 @@ packages:
   log@6.3.1:
     resolution: {integrity: sha512-McG47rJEWOkXTDioZzQNydAVvZNeEkSyLJ1VWkFwfW+o1knW+QSi8D1KjPn/TnctV+q99lkvJNe1f0E1IjfY2A==}
 
+  long@5.2.3:
+    resolution: {integrity: sha512-lcHwpNoggQTObv5apGNCTdJrO69eHOZMi4BNC+rTLER8iHAqGrUVeLh/irVIM7zTw2bOXA8T6uNPeujwOLg/2Q==}
+
   loupe@3.1.1:
     resolution: {integrity: sha512-edNu/8D5MKVfGVFRhFf8aAxiTM6Wumfz5XsaatSxlD3w4R1d/WEKUTydCdPGbl9K7QG/Ca3GnDV2sIKIpXRQcw==}
 
@@ -2379,8 +2403,16 @@ packages:
     resolution: {integrity: sha512-CgeuL5uom6j/ZVrg7G/+1IXqRY8JXX4Hghfy5YE0EhoYQWvndP1kufu58cmZLNIDKnRhZrXfdS9urVWx98AipQ==}
     engines: {node: 20 || >=22}
 
+  lru-cache@7.18.3:
+    resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
+    engines: {node: '>=12'}
+
   lru-queue@0.1.0:
     resolution: {integrity: sha512-BpdYkt9EvGl8OfWHDQPISVpcl5xZthb+XPsbELj5AQXxIC8IriDZIQYjBJPEm5rS420sjZ0TLEzRcq5KdBhYrQ==}
+
+  lru.min@1.1.0:
+    resolution: {integrity: sha512-86xXMB6DiuKrTqkE/lRL0drlNh568awttBPJ7D66fzDHpy6NC5r3N+Ly/lKCS2zjmeGyvFDx670z0cD0PVBwGA==}
+    engines: {bun: '>=1.0.0', deno: '>=1.30.0', node: '>=8.0.0'}
 
   luxon@3.3.0:
     resolution: {integrity: sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg==}
@@ -2486,6 +2518,14 @@ packages:
 
   mute-stream@0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
+
+  mysql2@3.11.3:
+    resolution: {integrity: sha512-Qpu2ADfbKzyLdwC/5d4W7+5Yz7yBzCU05YWt5npWzACST37wJsB23wgOSo00qi043urkiRwXtEvJc9UnuLX/MQ==}
+    engines: {node: '>= 8.0'}
+
+  named-placeholders@1.1.3:
+    resolution: {integrity: sha512-eLoBxg6wE/rZkJPhU/xRX1WTpkFEwDJEN96oxFrTsqBdbT5ec295Q+CoHrL9IT0DipqKhmGcaZmwOt8OON5x1w==}
+    engines: {node: '>=12.0.0'}
 
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
@@ -2853,6 +2893,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  seq-queue@0.0.5:
+    resolution: {integrity: sha512-hr3Wtp/GZIc/6DAGPDcV4/9WoZhjrkXsi5B/07QgX8tsdc6ilr7BFM6PM6rbdAX1kFSDYeZGLipIZZKyQP0O5Q==}
+
   serverless-git-info@1.2.4:
     resolution: {integrity: sha512-bflS6Z7Q6FRwaE+r//SC1mhXvPrgWxmPqINU0LBKrEbcSoWPRqBCMovRwOqZue/N0AnNBdY/bE4vifO2sFSqdQ==}
     peerDependencies:
@@ -2945,6 +2988,10 @@ packages:
 
   sql.js@1.11.0:
     resolution: {integrity: sha512-GsLUDU3vhOo14Pd5ME0y2te49JQyby6HuoCuadevEV+CGgTUjmYRrm7B7lhRyzOgrmcWmspUfyjNb6sOAEqdsA==}
+
+  sqlstring@2.3.3:
+    resolution: {integrity: sha512-qC9iz2FlN7DQl3+wjwn3802RTyjCx7sDvfQEXchwa6CWOx07/WVfh91gBmQ9fahw8snwGEWU3xGzOt4tFyHLxg==}
+    engines: {node: '>= 0.6'}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -5572,6 +5619,8 @@ snapshots:
       uuid: 8.0.0
       xml2js: 0.6.2
 
+  aws-ssl-profiles@1.1.2: {}
+
   axios@1.7.7:
     dependencies:
       follow-redirects: 1.15.9
@@ -5958,6 +6007,8 @@ snapshots:
   delay@5.0.0: {}
 
   delayed-stream@1.0.0: {}
+
+  denque@2.1.0: {}
 
   dezalgo@1.0.4:
     dependencies:
@@ -6349,6 +6400,10 @@ snapshots:
 
   functions-have-names@1.2.3: {}
 
+  generate-function@2.3.1:
+    dependencies:
+      is-property: 1.0.2
+
   get-func-name@2.0.2: {}
 
   get-intrinsic@1.2.4:
@@ -6495,6 +6550,10 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
+  iconv-lite@0.6.3:
+    dependencies:
+      safer-buffer: 2.1.2
+
   ieee754@1.1.13: {}
 
   ieee754@1.2.1: {}
@@ -6598,6 +6657,8 @@ snapshots:
   is-plain-obj@1.1.0: {}
 
   is-promise@2.2.2: {}
+
+  is-property@1.0.2: {}
 
   is-regex@1.1.4:
     dependencies:
@@ -6765,6 +6826,8 @@ snapshots:
       type: 2.7.3
       uni-global: 1.0.0
 
+  long@5.2.3: {}
+
   loupe@3.1.1:
     dependencies:
       get-func-name: 2.0.2
@@ -6775,9 +6838,13 @@ snapshots:
 
   lru-cache@11.0.1: {}
 
+  lru-cache@7.18.3: {}
+
   lru-queue@0.1.0:
     dependencies:
       es5-ext: 0.10.64
+
+  lru.min@1.1.0: {}
 
   luxon@3.3.0: {}
 
@@ -6890,6 +6957,22 @@ snapshots:
   ms@2.1.3: {}
 
   mute-stream@0.0.8: {}
+
+  mysql2@3.11.3:
+    dependencies:
+      aws-ssl-profiles: 1.1.2
+      denque: 2.1.0
+      generate-function: 2.3.1
+      iconv-lite: 0.6.3
+      long: 5.2.3
+      lru.min: 1.1.0
+      named-placeholders: 1.1.3
+      seq-queue: 0.0.5
+      sqlstring: 2.3.3
+
+  named-placeholders@1.1.3:
+    dependencies:
+      lru-cache: 7.18.3
 
   nanoid@3.3.7: {}
 
@@ -7251,6 +7334,8 @@ snapshots:
 
   semver@7.6.3: {}
 
+  seq-queue@0.0.5: {}
+
   serverless-git-info@1.2.4(serverless@3.39.0):
     dependencies:
       serverless: 3.39.0
@@ -7421,6 +7506,8 @@ snapshots:
       es5-ext: 0.10.64
 
   sql.js@1.11.0: {}
+
+  sqlstring@2.3.3: {}
 
   stackback@0.0.2: {}
 

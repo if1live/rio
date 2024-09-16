@@ -28,6 +28,9 @@ const opts = {
   treeShaking: true,
   platform: "node",
   external: [
+    // database
+    "kysely-wasm",
+    "sql.js",
     // aws-sdk v3 client
     // aws-sdk v3 core
   ],
