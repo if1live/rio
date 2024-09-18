@@ -8,9 +8,7 @@ export const upsert = async (db: MyKysely, rows: Table.NewRow[]) => {
   const result = await db
     .insertInto(Table.name)
     .values(rows)
-    .onConflict((oc) =>
-      oc.columns(["account_id", "issue_codez12", "date"]).doNothing(),
-    )
+    .onConflict((oc) => oc.columns(Table.primaryKey).doNothing())
     .executeTakeFirst();
   return result;
 };
@@ -22,6 +20,6 @@ export const findByDate = async (
   return await db
     .selectFrom(Table.name)
     .selectAll()
-    .where("date", "=", date)
+    .where("date_kst", "=", date)
     .execute();
 };

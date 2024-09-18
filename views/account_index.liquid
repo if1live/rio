@@ -22,9 +22,9 @@
 
       <tbody>
         <tr
-          {% if summary.lsnpf_amt_wonz18 > 0 %}
+          {% if summary.lsnpf_amt_won > 0 %}
           class="product-positive"
-          {% elsif summary.lsnpf_amt_wonz18 < 0 %}
+          {% elsif summary.lsnpf_amt_won < 0 %}
           class="product-negative"
           {% endif %}>
 
@@ -33,10 +33,10 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td class="right aligned currency-text">{{ summary.byn_amtz18 }}</td>
-          <td class="right aligned currency-text">{{ summary.ass_amtz18 }}</td>
-          <td class="right aligned color-text currency-text">{{ summary.lsnpf_amt_wonz18 }}</td>
-          <td class="right aligned color-text">{{ summary.pft_rtz15 | round: 2 }}</td>
+          <td class="right aligned currency-text">{{ summary.byn_amt }}</td>
+          <td class="right aligned currency-text">{{ summary.ass_amt }}</td>
+          <td class="right aligned color-text currency-text">{{ summary.lsnpf_amt_won }}</td>
+          <td class="right aligned color-text">{{ summary.pft_rt | round: 2 }}</td>
         </tr>
       </tbody>
 
@@ -58,9 +58,9 @@
         {% for report in reports %}
           {% assign summary = report.summary %}
           <tr
-            {% if summary.lsnpf_amt_wonz18 > 0 %}
+            {% if summary.lsnpf_amt_won > 0 %}
             class="product-positive"
-            {% elsif summary.lsnpf_amt_wonz18 < 0 %}
+            {% elsif summary.lsnpf_amt_won < 0 %}
             class="product-negative"
             {% endif %}>
 
@@ -69,10 +69,10 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td class="right aligned currency-text">{{ summary.byn_amtz18 }}</td>
-            <td class="right aligned currency-text">{{ summary.ass_amtz18 }}</td>
-            <td class="right aligned color-text currency-text">{{ summary.lsnpf_amt_wonz18 }}</td>
-            <td class="right aligned color-text">{{ summary.pft_rtz15 | round: 2 }}</td>
+            <td class="right aligned currency-text">{{ summary.byn_amt }}</td>
+            <td class="right aligned currency-text">{{ summary.ass_amt }}</td>
+            <td class="right aligned color-text currency-text">{{ summary.lsnpf_amt_won }}</td>
+            <td class="right aligned color-text">{{ summary.pft_rt | round: 2 }}</td>
           </tr>
         {% endfor %}
       </tbody>
@@ -97,36 +97,36 @@
         <tbody>
           {% for entry in snapshots %}
             <tr
-              {% if entry.holding.lsnpf_amt_wonz18 > 0 %}
+              {% if entry.holding.lsnpf_amt_won > 0 %}
               class="product-positive"
-              {% elsif entry.holding.lsnpf_amt_wonz18 < 0 %}
+              {% elsif entry.holding.lsnpf_amt_won < 0 %}
               class="product-negative"
               {% endif %}>
 
-              <td>{{ entry.product.pdt_tp_nmz50 }}</td>
-              <td>{{ entry.product.issue_namez40 }}</td>
-              <td>{{ entry.product.issue_codez12 }}</td>
+              <td>{{ entry.product.pdt_tp_nm }}</td>
+              <td>{{ entry.product.issue_name }}</td>
+              <td>{{ entry.product.issue_code }}</td>
 
               <td class="right aligned currency-text">
                 <!--
                   scale 조정은 일단 하드코딩으로 방어
                   수량을 해외주식, IRP, ETF, 펀드는 1000으로 나눠야한다
                 -->
-                {% if entry.product.pdt_tp_nmz50 == "주식" %}
-                  {{ entry.holding.bal_qtyz18 | divided_by: 100 }}
+                {% if entry.product.pdt_tp_nm == "주식" %}
+                  {{ entry.holding.bal_qty | divided_by: 100 }}
                 {% else %}
-                  {{ entry.holding.bal_qtyz18 | divided_by: 1000 }}
+                  {{ entry.holding.bal_qty | divided_by: 1000 }}
                 {% endif %}
               </td>
-              <td class="right aligned currency-text">{{ entry.holding.prsnt_pricez18 | divided_by: 100 }}</td>
-              <td class="right aligned currency-text">{{ entry.holding.byn_amtz18 }}</td>
-              <td class="right aligned currency-text">{{ entry.holding.ass_amtz18 }}</td>
+              <td class="right aligned currency-text">{{ entry.holding.prsnt_price | divided_by: 100 }}</td>
+              <td class="right aligned currency-text">{{ entry.holding.byn_amt }}</td>
+              <td class="right aligned currency-text">{{ entry.holding.ass_amt }}</td>
 
               <td class="right aligned color-text currency-text">
-                {{ entry.holding.lsnpf_amt_wonz18 }}
+                {{ entry.holding.lsnpf_amt_won }}
               </td>
               <td class="right aligned color-text">
-                {{ entry.holding.earn_ratez15 | round: 2 }}
+                {{ entry.holding.earn_rate | round: 2 }}
               </td>
             </tr>
           {% endfor %}

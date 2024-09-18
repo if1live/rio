@@ -12,7 +12,7 @@ export interface Table {
    * @summary 종목번호
    * @example "259960", "NHKRCMA030", "US78464A8541"
    */
-  issue_codez12: string;
+  issue_code: string;
 
   /**
    * @summary 종목명
@@ -22,13 +22,13 @@ export interface Table {
    * - "SPDR Portfolio S&P 500 ETF"
    * - "< 합   계 >"
    */
-  issue_namez40: string;
+  issue_name: string;
 
   /**
    * @summary 국가코드명
    * @example "", "미국"
    */
-  nat_cd_nmz40: string;
+  nat_cd_nm: string;
 
   /**
    * @summary 상품유형명
@@ -38,31 +38,31 @@ export interface Table {
    * - "채권형펀드"
    * - "자유약정형 RP"
    */
-  pdt_tp_nmz50: string;
+  pdt_tp_nm: string;
 
   /**
    * @summary 통화코드
    * @example "", "KRW", "USD"
    */
-  cur_cdz3: string;
+  cur_cd: string;
 
   /**
    * @summary 종목중분류코드
    * @example "01001", "28001"
    */
-  iem_mlf_cdz5: string;
+  iem_mlf_cd: string;
 
   /**
    * @summary 잔고유형
    * @example "현금"
    */
-  bal_typez6: string;
+  bal_type: string;
 
   /**
    * @summary 종목증거금율
    * @description RP, 외회ETP 에서는 null
    */
-  issue_mgamt_ratez10: number | null;
+  issue_mgamt_rate: number | null;
 }
 
 export type Row = Selectable<Table>;
@@ -72,12 +72,12 @@ export const prepare = (db: Kysely<{ [name]: Table }>) =>
   db.schema
     .createTable(name)
     .ifNotExists()
-    .addColumn("issue_codez12", "text")
-    .addColumn("issue_namez40", "text")
-    .addColumn("nat_cd_nmz40", "text")
-    .addColumn("pdt_tp_nmz50", "text")
-    .addColumn("cur_cdz3", "text")
-    .addColumn("iem_mlf_cdz5", "text")
-    .addColumn("bal_typez6", "text")
-    .addColumn("issue_mgamt_ratez10", "integer")
-    .addPrimaryKeyConstraint(`${name}_primary_key`, ["issue_codez12"]);
+    .addColumn("issue_code", "text")
+    .addColumn("issue_name", "text")
+    .addColumn("nat_cd_nm", "text")
+    .addColumn("pdt_tp_nm", "text")
+    .addColumn("cur_cd", "text")
+    .addColumn("iem_mlf_cd", "text")
+    .addColumn("bal_type", "text")
+    .addColumn("issue_mgamt_rate", "integer")
+    .addPrimaryKeyConstraint(`${name}_primary_key`, ["issue_code"]);

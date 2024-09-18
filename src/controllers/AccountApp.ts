@@ -18,9 +18,9 @@ const today = "1970-01-01";
 router.get("/index", async (c) => {
   const reports = await BalanceService.load(db, today);
   const summary = AccountSummary.create({
-    lsnpf_amt_wonz18: R.sumBy(reports, (x) => x.summary.lsnpf_amt_wonz18),
-    ass_amtz18: R.sumBy(reports, (x) => x.summary.ass_amtz18),
-    byn_amtz18: R.sumBy(reports, (x) => x.summary.byn_amtz18),
+    lsnpf_amt_won: R.sumBy(reports, (x) => x.summary.lsnpf_amt_won),
+    ass_amt: R.sumBy(reports, (x) => x.summary.ass_amt),
+    byn_amt: R.sumBy(reports, (x) => x.summary.byn_amt),
   });
   const html = engine.renderFile("account_index", { reports, summary });
   return c.html(html);

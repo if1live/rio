@@ -5,7 +5,7 @@ export const upsert = async (db: MyKysely, products: Table.NewRow[]) => {
   const result = await db
     .insertInto(Table.name)
     .values(products)
-    .onConflict((oc) => oc.column("issue_codez12").doNothing())
+    .onConflict((oc) => oc.column("issue_code").doNothing())
     .executeTakeFirst();
   return result;
 };
@@ -21,6 +21,6 @@ export const findByIds = async (
   return await db
     .selectFrom(Table.name)
     .selectAll()
-    .where("issue_codez12", "in", ids)
+    .where("issue_code", "in", ids)
     .execute();
 };

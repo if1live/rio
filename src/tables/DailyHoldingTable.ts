@@ -22,96 +22,89 @@ export interface Table {
   account_id: number;
 
   /** @summary 종목번호 */
-  issue_codez12: string;
+  issue_code: string;
 
-  date: string;
+  date_kst: string;
 
   /**
    * @summary 잔고수량.
    * @example "75000" -> "75"
    */
-  bal_qtyz18: number;
+  bal_qty: number;
 
   /** @summary 잔량 */
-  jan_qtyz18: number;
+  jan_qty: number;
 
   /** @summary 미결제량 */
-  unstl_qtyz18: number;
+  unstl_qty: number;
 
   /** @summary 현재가 */
-  prsnt_pricez18: number;
+  prsnt_price: number;
 
   /** @summary 평균매입가 */
-  slby_amtz18: number;
+  slby_amt: number;
 
   /** @summary 평균매도가 */
-  medo_slby_amtz18: number;
+  medo_slby_amt: number;
 
   /** @summary 평가금액 */
-  ass_amtz18: number;
+  ass_amt: number;
 
   /** @summary 매입금액 */
-  byn_amtz18: number;
+  byn_amt: number;
 
   /** @summary 매도손익 */
-  post_lsnpf_amtz18: number;
+  post_lsnpf_amt: number;
 
   /** @summary 손익(원) */
-  lsnpf_amt_wonz18: number;
+  lsnpf_amt_won: number;
 
   /**
    * @summary 손익율
    * @example 1.255846717
    */
-  earn_ratez15: number;
+  earn_rate: number;
 
   /** @summary 신용유형 */
-  mrgn_codez4: string;
+  mrgn_code: string;
 
   /**
    * @summary 대출일
    * @example 20240913
    */
-  loan_datez8: string | null;
+  loan_date: string | null;
 
   /**
    * @summary 만기일
    * @example 20240913
    */
-  expr_datez8: string | null;
+  expr_date: string | null;
 }
 
 export type Row = Selectable<Table>;
 export type NewRow = Insertable<Table>;
 
+export const primaryKey = ["date_kst", "account_id", "issue_code"] as const;
+
 export const prepare = (db: Kysely<{ [name]: Table }>) =>
   db.schema
     .createTable(name)
     .ifNotExists()
+    .addColumn("date_kst", "text")
     .addColumn("account_id", "integer")
-    .addColumn("issue_codez12", "text")
-    .addColumn("date", "text")
-    .addColumn("bal_qtyz18", "integer")
-    .addColumn("jan_qtyz18", "integer")
-    .addColumn("unstl_qtyz18", "integer")
-    .addColumn("prsnt_pricez18", "integer")
-    .addColumn("slby_amtz18", "integer")
-    .addColumn("medo_slby_amtz18", "integer")
-    .addColumn("ass_amtz18", "integer")
-    .addColumn("byn_amtz18", "integer")
-    .addColumn("post_lsnpf_amtz18", "integer")
-    .addColumn("lsnpf_amt_wonz18", "integer")
-    .addColumn("earn_ratez15", "real")
-    .addColumn("mrgn_codez4", "text")
-    .addColumn("expr_datez8", "text")
-    .addColumn("loan_datez8", "text")
-    .addPrimaryKeyConstraint(`${name}_primary_key`, [
-      "account_id",
-      "issue_codez12",
-      "date",
-    ])
-    .addUniqueConstraint(`${name}_unique`, [
-      "account_id",
-      "date",
-      "issue_codez12",
-    ]);
+    .addColumn("issue_code", "text")
+    .addColumn("bal_qty", "integer")
+    .addColumn("jan_qty", "integer")
+    .addColumn("unstl_qty", "integer")
+    .addColumn("prsnt_price", "integer")
+    .addColumn("slby_amt", "integer")
+    .addColumn("medo_slby_amt", "integer")
+    .addColumn("ass_amt", "integer")
+    .addColumn("byn_amt", "integer")
+    .addColumn("post_lsnpf_amt", "integer")
+    .addColumn("lsnpf_amt_won", "integer")
+    .addColumn("earn_rate", "real")
+    .addColumn("mrgn_code", "text")
+    .addColumn("expr_date", "text")
+    .addColumn("loan_date", "text")
+    .addPrimaryKeyConstraint(`${name}_primary_key`, [...primaryKey]);
