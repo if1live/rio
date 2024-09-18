@@ -7,12 +7,16 @@ import {
   type KyselyPlugin,
   ParseJSONResultsPlugin,
 } from "kysely";
+import { TablePrefixPlugin } from "kysely-plugin-prefix";
 import { SqlJsDialect } from "kysely-wasm";
 import { settings } from "../settings/index.js";
 import { DialectFactory } from "../system/databases/index.js";
 import type { MyDatabase } from "../tables/index.js";
 
-const plugins_common: KyselyPlugin[] = [new ParseJSONResultsPlugin()];
+const plugins_common: KyselyPlugin[] = [
+  new ParseJSONResultsPlugin(),
+  new TablePrefixPlugin({ prefix: "rio" }),
+];
 
 const options: Omit<KyselyConfig, "dialect"> = {
   // log: ["query", "error"],

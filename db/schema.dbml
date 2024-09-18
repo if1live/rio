@@ -1,0 +1,97 @@
+    Table rio_product {
+    // 종목번호
+    // "259960", "NHKRCMA030", "US78464A8541"
+    issue_code varchar(12) [primary key]
+
+    // 종목명
+    // - "SK하이닉스"
+    // - "NH QV CMA 발행어음"
+    // - "SPDR Portfolio S&P 500 ETF"
+    // - "< 합   계 >"
+    issue_name varchar(40)
+
+    // 국가코드명
+    // "", "미국"
+    nat_cd_nm varchar(40)
+
+    // 상품유형명
+    // - "주식"
+    // - "외화ETP"
+    // - "채권형펀드"
+    // - "자유약정형 RP"
+    pdt_tp_nm varchar(50)
+
+    // 통화코드
+    // "", "KRW", "USD"
+    cur_cd varchar(3)
+
+    // 종목중분류코드
+    // "01001", "28001"
+    iem_mlf_cd varchar(5)
+
+    // 잔고유형
+    // "현금"
+    bal_type varchar(6)
+
+    // 종목증거금율
+    // RP, 외회ETP 에서는 null
+    issue_mgamt_rate integer
+}
+
+Table rio_daily_holding {
+    date_kst varchar(10)
+
+    account_id integer
+
+    // 종목번호
+    issue_code varchar(12)
+
+    // 잔고수량
+    bal_qty integer
+
+    // 잔량
+    jan_qty integer
+
+    // 미결제량
+    unstl_qty integer
+
+    // 현재가
+    prsnt_price integer
+
+    // 평균매입가
+    slby_amt integer
+
+    // 평균매도가
+    medo_slby_amt integer
+
+    // 평가금액
+    ass_amt integer
+
+    // 매입금액
+    byn_amt integer
+
+    // 매도손익
+    post_lsnpf_amt integer
+
+    // 손익(원)
+    lsnpf_amt_won integer
+
+    // 손익율
+    // 1.255846717
+    earn_rate real
+
+    // 신용유형
+    mrgn_code varchar(4)
+
+    // 대출일
+    // 20240913
+    loan_date varchar(8)
+
+    // 만기일
+    // 20240913
+    expr_date varchar(8)
+
+    indexes {
+        (date_kst, account_id, issue_code) [pk]
+    }
+}

@@ -20,6 +20,9 @@ importers:
       kysely:
         specifier: ^0.27.4
         version: 0.27.4
+      kysely-plugin-prefix:
+        specifier: ^1.1.1
+        version: 1.1.1
       liquidjs:
         specifier: ^10.16.7
         version: 10.16.7
@@ -2387,10 +2390,17 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
+  kysely-plugin-prefix@1.1.1:
+    resolution: {integrity: sha512-jew6J/woBePsu5bQeJjBwK7QpOLV4DHYQObxXzRzqawCYrWm9uzX01xo5jL1KC/+fEPDKf6kRRhwGl9VJOQbyQ==}
+
   kysely-wasm@0.6.3:
     resolution: {integrity: sha512-dA7kkmSkHkDXkpwjAKwc974wguksgV3N3jYq5C1JQmQgDm485UASLIbh+uTYp/rxcP0Nksl2pmdIc5XVDebVuQ==}
     peerDependencies:
       kysely: '>=0.26'
+
+  kysely@0.26.3:
+    resolution: {integrity: sha512-yWSgGi9bY13b/W06DD2OCDDHQmq1kwTGYlQ4wpZkMOJqMGCstVCFIvxCCVG4KfY1/3G0MhDAcZsip/Lw8/vJWw==}
+    engines: {node: '>=14.0.0'}
 
   kysely@0.27.4:
     resolution: {integrity: sha512-dyNKv2KRvYOQPLCAOCjjQuCk4YFd33BvGdf/o5bC7FiW+BB6snA81Zt+2wT9QDFzKqxKa5rrOmvlK/anehCcgA==}
@@ -6969,9 +6979,15 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
+  kysely-plugin-prefix@1.1.1:
+    dependencies:
+      kysely: 0.26.3
+
   kysely-wasm@0.6.3(kysely@0.27.4):
     dependencies:
       kysely: 0.27.4
+
+  kysely@0.26.3: {}
 
   kysely@0.27.4: {}
 

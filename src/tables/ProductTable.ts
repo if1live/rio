@@ -2,7 +2,7 @@ import type { Insertable, Kysely, Selectable } from "kysely";
 import type { SnakeCase } from "type-fest";
 
 // financial products 금융상품은 길어서 짧게. 어차피 다른 product도 없을거고
-export const name = "Product";
+export const name = "product";
 
 export type NaiveName = SnakeCase<typeof name>;
 export const naiveName: NaiveName = "product";

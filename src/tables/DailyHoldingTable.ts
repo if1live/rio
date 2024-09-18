@@ -1,4 +1,5 @@
 import type { Insertable, Kysely, Selectable } from "kysely";
+import type { SnakeCase } from "type-fest";
 
 /*
 flaot 정밀도 이슈를 피하려고 서버에서 받은걸 그대로 받아서 대응
@@ -13,9 +14,9 @@ qtyz18는 1000으로 나눠야할수도?. QVOpenApi 기준으로 qtyz16가 일�
 이런식으로 유도되는 값이 존재하지만 DB에는 통째로 저장한다.
 */
 
-export const name = "DailyHolding";
+export const name = "daily_holding";
 
-export type NaiveName = "daily_holding";
+export type NaiveName = SnakeCase<typeof name>;
 export const naiveName: NaiveName = "daily_holding";
 
 export interface Table {
