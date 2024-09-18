@@ -29,7 +29,6 @@ const opts = {
   platform: "node",
   external: [
     // database
-    "kysely-wasm",
     "sql.js",
     "better-sqlite3",
     "mysql2",
