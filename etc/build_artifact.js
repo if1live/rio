@@ -32,6 +32,7 @@ const opts = {
     "kysely-wasm",
     "sql.js",
     "better-sqlite3",
+    "mysql2",
     // aws-sdk v3 client
     // aws-sdk v3 core
   ],
