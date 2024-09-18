@@ -47,8 +47,12 @@ const createEngine_mysql = (
   };
 };
 
-type PostgresParameters = Required<ConstructorParameters<typeof PostgresPkg.Pool>>;
-const createEngine_postgres = (...args: PostgresParameters): CreateEngineFn<PostgresPkg.Pool> => {
+type PostgresParameters = Required<
+  ConstructorParameters<typeof PostgresPkg.Pool>
+>;
+const createEngine_postgres = (
+  ...args: PostgresParameters
+): CreateEngineFn<PostgresPkg.Pool> => {
   const [opts] = args;
   return async () => {
     const { Pool } = await import("pg");
@@ -170,6 +174,7 @@ export const parse = (input: string): Args => {
       case "mysql:":
         return parse_mysql(url);
       case "postgres:":
+      case "postgresql:":
         return parse_postgres(url);
       default:
         throw new Error(`Unsupported database URL: ${url.href}`);
