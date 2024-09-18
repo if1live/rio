@@ -84,12 +84,12 @@ Table rio_daily_holding {
     mrgn_code varchar(4)
 
     // 대출일
-    // 20240913
-    loan_date varchar(8)
+    // 20240913 -> 2024-09-13
+    loan_date varchar(10)
 
     // 만기일
-    // 20240913
-    expr_date varchar(8)
+    // 20240913 -> 2024-09-13
+    expr_date varchar(10)
 
     indexes {
         (date_kst, account_id, issue_code) [pk]

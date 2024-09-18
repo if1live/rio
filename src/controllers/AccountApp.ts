@@ -2,27 +2,20 @@ import fs from "node:fs/promises";
 import { Hono } from "hono";
 import * as R from "remeda";
 import { z } from "zod";
+import { deriveDateKst } from "../helpers/index.js";
 import { db } from "../instances/db.js";
 import { engine } from "../instances/engine.js";
-import { AccountSummary } from "../models/index.js";
 import type { S8202Response } from "../models/s8202.js";
 import { BalanceService, NamuhClient } from "../services/index.js";
 import { settings } from "../settings/index.js";
 
 export const router = new Hono();
 
-// TODO: 로컬 시간대로 쓰는게 유용할듯
-// TODO: 날짜별 기록은 나중에 하드코딩
-const today = "1970-01-01";
-
 router.get("/index", async (c) => {
-  const reports = await BalanceService.load(db, today);
-  const summary = AccountSummary.create({
-    lsnpf_amt_won: R.sumBy(reports, (x) => x.summary.lsnpf_amt_won),
-    ass_amt: R.sumBy(reports, (x) => x.summary.ass_amt),
-    byn_amt: R.sumBy(reports, (x) => x.summary.byn_amt),
-  });
-  const html = engine.renderFile("account_index", { reports, summary });
+  const dateKst = deriveDateKst(new Date());
+
+  const data = await BalanceService.load(db, dateKst);
+  const html = engine.renderFile("account_index", { ...data, dateKst });
   return c.html(html);
 });
 
@@ -40,27 +33,31 @@ router.get("/current/s8202/:accountIndex", async (c) => {
 });
 
 // refresh: db 수동 갱신
-router.get("/refresh/s8202/:accountIndex", async (c) => {
-  // TODO: qvopenapi -> db
-  // TODO: 시간대 주의
-  return c.json({ message: "refreshing" });
-});
-
-// recent: db 기준으로 조회할것
-router.get("/recent", async (c) => {
-  // TODO: fetch current data
+router.get("/refresh", async (c) => {
   const accounts = R.range(1, settings.ACCOUNT_COUNT + 1);
   const tasks = accounts.map(async (accountIndex) =>
     NamuhClient.fetch_s8202(accountIndex),
   );
   const results = await Promise.all(tasks);
+
+  const dateKst = deriveDateKst(new Date());
+  await BalanceService.save(db, results, dateKst);
   return c.json(results);
+});
+
+// recent: db 기준으로 조회할것
+router.get("/recent", async (c) => {
+  const dateKst = deriveDateKst(new Date());
+  const data = await BalanceService.load(db, dateKst);
+  return c.json(data);
 });
 
 router.get("/update", async (c) => {
   const fp = "D:/finance/rio/mocks/current.json";
   const text = await fs.readFile(fp, "utf-8");
   const data = JSON.parse(text) as S8202Response[];
-  await BalanceService.save(db, data, today);
+
+  const dateKst = deriveDateKst(new Date());
+  await BalanceService.save(db, data, dateKst);
   return c.json({ ok: true });
 });

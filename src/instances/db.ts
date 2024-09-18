@@ -22,7 +22,7 @@ const plugins_pg: KyselyPlugin[] = [new WithSchemaPlugin("finance")];
 
 const options: Omit<KyselyConfig, "dialect"> = {
   // log: ["query", "error"],
-  log: ["query"],
+  // log: ["query"],
 };
 
 const createKysely = <T>(dialect: Dialect) => {

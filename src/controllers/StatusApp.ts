@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { db } from "../instances/index.js";
 import { sql } from "kysely";
+import { db } from "../instances/index.js";
 
 export const router = new Hono();
 

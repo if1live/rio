@@ -48,9 +48,19 @@ functions:
         - artifact/http_main.mjs*
         - priv/**/*
         - static/**/*
+        - views/**/*
     events:
       - httpApi: ANY /
       - httpApi: ANY /{pathname+}
+
+  cron:
+    handler: artifact/schedule_main.handler
+    package:
+      patterns:
+        - artifact/schedule_main.mjs*
+        - views/**/*
+    events:
+      - schedule: rate(6 hours)
 
 custom:
   scriptHooks:

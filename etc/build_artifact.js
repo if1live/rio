@@ -94,4 +94,5 @@ const build = async (fp_entrypoint, filename, opts) => {
 
 await Promise.allSettled([
   build("./src/handlers/http_main.ts", "http_main.js", opts),
+  build("./src/handlers/schedule_main.ts", "schedule_main.js", opts),
 ]);

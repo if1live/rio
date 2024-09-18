@@ -2,7 +2,7 @@
 
 {% block content %}
   <div class="ui container">
-    <h1>계좌 요약</h1>
+    <h1>나무증권 요약: {{ dateKst }}</h1>
 
     <!-- 테이블 규격으로 정렬하고 싶다 -->
     <table class="ui celled compact selectable unstackable table">
@@ -107,17 +107,7 @@
               <td>{{ entry.product.issue_name }}</td>
               <td>{{ entry.product.issue_code }}</td>
 
-              <td class="right aligned currency-text">
-                <!--
-                  scale 조정은 일단 하드코딩으로 방어
-                  수량을 해외주식, IRP, ETF, 펀드는 1000으로 나눠야한다
-                -->
-                {% if entry.product.pdt_tp_nm == "주식" %}
-                  {{ entry.holding.bal_qty | divided_by: 100 }}
-                {% else %}
-                  {{ entry.holding.bal_qty | divided_by: 1000 }}
-                {% endif %}
-              </td>
+              <td class="right aligned currency-text">{{ entry.holding.bal_qty }}</td>
               <td class="right aligned currency-text">{{ entry.holding.prsnt_price | divided_by: 100 }}</td>
               <td class="right aligned currency-text">{{ entry.holding.byn_amt }}</td>
               <td class="right aligned currency-text">{{ entry.holding.ass_amt }}</td>

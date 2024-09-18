@@ -46,15 +46,24 @@ export const save = async (
         const loan_date = transformNullableDate(entry.loan_datez8);
         const expr_date = transformNullableDate(entry.expr_datez8);
 
+        // scale 조정은 일단 하드코딩으로 방어
+        // 수량을 해외주식, IRP, ETF, 펀드는 1000으로 나눠야한다.
+        // 원본 숫자 안건드리려고 했는데 IRP에서 integer overflow 발생해서 어쩔수 없이 대응
+        // bigint로 바꾸면 일이 너무 커져서 그냥 숫자를 변환한다.
+        const quantityScale = entry.pdt_tp_nmz50 === "주식" ? 100 : 1000;
+        const bal_qty = entry.bal_qtyz18 / quantityScale;
+        const jan_qty = entry.jan_qtyz18 / quantityScale;
+        const unstl_qty = entry.unstl_qtyz18 / quantityScale;
+
         const row: DailyHoldingTable.NewRow = {
           // primary key
           account_id: accountId,
           issue_code: entry.issue_codez12,
           date_kst: today,
           // data
-          bal_qty: entry.bal_qtyz18,
-          jan_qty: entry.jan_qtyz18,
-          unstl_qty: entry.unstl_qtyz18,
+          bal_qty: bal_qty,
+          jan_qty: jan_qty,
+          unstl_qty: unstl_qty,
           prsnt_price: entry.prsnt_pricez18,
           slby_amt: entry.slby_amtz18,
           medo_slby_amt: entry.medo_slby_amtz18,
@@ -90,7 +99,10 @@ const transformNullableDate = (input: string | null) => {
 export const load = async (
   db: MyKysely,
   today: string,
-): Promise<AccountDailyReport[]> => {
+): Promise<{
+  summary: AccountSummary;
+  reports: AccountDailyReport[];
+}> => {
   // db에서 재구성 테스트
   const holdings = await DailyHoldingRepository.findByDate(db, today);
 
@@ -106,7 +118,7 @@ export const load = async (
     R.unique(),
   );
 
-  const results = accountIds.map((accountId) => {
+  const reports = accountIds.map((accountId) => {
     const founds = holdings.filter((x) => x.account_id === accountId);
     const snapshots = founds.map((found) => {
       const product = productMap.get(found.issue_code);
@@ -131,5 +143,11 @@ export const load = async (
     };
   });
 
-  return results;
+  const summary = AccountSummary.create({
+    lsnpf_amt_won: R.sumBy(reports, (x) => x.summary.lsnpf_amt_won),
+    ass_amt: R.sumBy(reports, (x) => x.summary.ass_amt),
+    byn_amt: R.sumBy(reports, (x) => x.summary.byn_amt),
+  });
+
+  return { summary, reports };
 };
