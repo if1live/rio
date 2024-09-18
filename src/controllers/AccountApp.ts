@@ -30,17 +30,18 @@ router.get("/current/s8202/:accountIndex", async (c) => {
   return c.json(result);
 });
 
-// refresh: db 수동 갱신
-router.post("/refresh", async (c) => {
+// update: db 수동 갱신
+router.post("/update", async (c) => {
   const accounts = R.range(1, settings.ACCOUNT_COUNT + 1);
   const tasks = accounts.map(async (accountIndex) =>
     NamuhClient.fetch_s8202(accountIndex),
   );
   const results = await Promise.all(tasks);
 
-  const dateKst = deriveDateKst(new Date());
+  const now = new Date();
+  const dateKst = deriveDateKst(now);
   await BalanceService.save(db, results, dateKst);
-  return c.json(results);
+  return c.json({ now, dateKst });
 });
 
 // recent: db 기준으로 조회할것

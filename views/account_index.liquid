@@ -4,6 +4,14 @@
   <div class="ui container">
     <h1>나무증권 요약: {{ dateKst }}</h1>
 
+    <button
+      class="ui small button"
+      hx-post="/account/update"
+      hx-target="#result-update">
+      update
+    </button>
+    <div id="result-update"></div>
+
     <!-- 테이블 규격으로 정렬하고 싶다 -->
     <table class="ui celled compact selectable unstackable table">
       <thead>
