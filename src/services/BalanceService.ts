@@ -49,11 +49,9 @@ export const save = async (
         // scale 조정은 일단 하드코딩으로 방어
         // 수량을 해외주식, IRP, ETF, 펀드는 1000으로 나눠야한다.
         // 원본 숫자 안건드리려고 했는데 IRP에서 integer overflow 발생해서 어쩔수 없이 대응
-        // bigint로 바꾸면 일이 너무 커져서 그냥 숫자를 변환한다.
-        const quantityScale = entry.pdt_tp_nmz50 === "주식" ? 100 : 1000;
-        const bal_qty = entry.bal_qtyz18 / quantityScale;
-        const jan_qty = entry.jan_qtyz18 / quantityScale;
-        const unstl_qty = entry.unstl_qtyz18 / quantityScale;
+        const bal_qty = entry.bal_qtyz18 / 1000;
+        const jan_qty = entry.jan_qtyz18 / 1000;
+        const unstl_qty = entry.unstl_qtyz18 / 1000;
 
         const row: DailyHoldingTable.NewRow = {
           // primary key
