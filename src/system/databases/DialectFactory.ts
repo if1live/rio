@@ -2,7 +2,7 @@ import type SQLitePkg from "better-sqlite3";
 import { MysqlDialect, PostgresDialect, SqliteDialect } from "kysely";
 import { SqlJsDialect } from "kysely-wasm";
 import type MysqlPkg from "mysql2";
-import type PgPkg from "pg";
+import type PostgresPkg from "pg";
 import type SqlJsPkg from "sql.js";
 
 // kysely는 db를 생성하는 함수를 dialect 생성 시점에 넣을 수 있다.
@@ -47,8 +47,8 @@ const createEngine_mysql = (
   };
 };
 
-type PgParameters = Required<ConstructorParameters<typeof PgPkg.Pool>>;
-const createEngine_pg = (...args: PgParameters): CreateEngineFn<PgPkg.Pool> => {
+type PostgresParameters = Required<ConstructorParameters<typeof PostgresPkg.Pool>>;
+const createEngine_postgres = (...args: PostgresParameters): CreateEngineFn<PostgresPkg.Pool> => {
   const [opts] = args;
   return async () => {
     const { Pool } = await import("pg");
@@ -60,8 +60,8 @@ type Args_Generic<Tag, Input> = { _tag: Tag; input: Input };
 type Args_SqlJs = Args_Generic<"sqljs", SqlJsParameters>;
 type Args_Sqlite = Args_Generic<"sqlite", SQLiteParamters>;
 type Args_Mysql = Args_Generic<"mysql", MysqlParameters>;
-type Args_Pg = Args_Generic<"pg", PgParameters>;
-type Args = Args_SqlJs | Args_Sqlite | Args_Mysql | Args_Pg;
+type Args_Postgres = Args_Generic<"postgres", PostgresParameters>;
+type Args = Args_SqlJs | Args_Sqlite | Args_Mysql | Args_Postgres;
 
 /**
  * better-sqlite3는 네이티브 플러그인이라서 node.js 버전을 바꾼다거나 꼬인다.
@@ -87,8 +87,8 @@ const create_mysql = (options: MysqlPkg.PoolOptions) => {
   return dialect;
 };
 
-const create_pg = (options: PgPkg.PoolConfig) => {
-  const fn = createEngine_pg(options);
+const create_postgres = (options: PostgresPkg.PoolConfig) => {
+  const fn = createEngine_postgres(options);
   const dialect = new PostgresDialect({ pool: fn });
   return dialect;
 };
@@ -144,17 +144,17 @@ const parse_mysql = (url: URL): Args_Mysql => {
   };
 };
 
-const parse_pg = (url: URL): Args_Pg => {
+const parse_postgres = (url: URL): Args_Postgres => {
   const connectionLimit = isAwsLambda ? 1 : 5;
   const decoded = decodeUrl(url);
 
-  const opts: PgParameters[0] = {
+  const opts: PostgresParameters[0] = {
     ...decoded,
     max: connectionLimit,
   };
 
   return {
-    _tag: "pg",
+    _tag: "postgres",
     input: [opts],
   };
 };
@@ -169,8 +169,8 @@ export const parse = (input: string): Args => {
         return parse_sqlite(url);
       case "mysql:":
         return parse_mysql(url);
-      case "pg:":
-        return parse_pg(url);
+      case "postgres:":
+        return parse_postgres(url);
       default:
         throw new Error(`Unsupported database URL: ${url.href}`);
     }
@@ -190,7 +190,7 @@ export const fromConnectionString = (
       return create_sqlite(...parsed.input);
     case "mysql":
       return create_mysql(...parsed.input);
-    case "pg":
-      return create_pg(...parsed.input);
+    case "postgres":
+      return create_postgres(...parsed.input);
   }
 };
