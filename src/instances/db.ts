@@ -1,14 +1,14 @@
 import { assert } from "@toss/assert";
 import {
-  CamelCasePlugin,
   type Dialect,
   Kysely,
   type KyselyConfig,
   type KyselyPlugin,
   ParseJSONResultsPlugin,
+  PostgresDialect,
+  WithSchemaPlugin,
 } from "kysely";
 import { TablePrefixPlugin } from "kysely-plugin-prefix";
-import { SqlJsDialect } from "kysely-wasm";
 import { settings } from "../settings/index.js";
 import { DialectFactory } from "../system/databases/index.js";
 import type { MyDatabase } from "../tables/index.js";
@@ -18,15 +18,17 @@ const plugins_common: KyselyPlugin[] = [
   new TablePrefixPlugin({ prefix: "rio" }),
 ];
 
+const plugins_pg: KyselyPlugin[] = [new WithSchemaPlugin("finance")];
+
 const options: Omit<KyselyConfig, "dialect"> = {
   // log: ["query", "error"],
   log: ["query"],
 };
 
 const createKysely = <T>(dialect: Dialect) => {
-  let plugins: KyselyPlugin[] = plugins_common;
-  if (dialect instanceof SqlJsDialect) {
-    plugins = [...plugins_common];
+  let plugins: KyselyPlugin[] = [...plugins_common];
+  if (dialect instanceof PostgresDialect) {
+    plugins = [...plugins, ...plugins_pg];
   }
 
   return new Kysely<T>({
