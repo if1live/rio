@@ -603,3 +603,5 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,visualstudio,dotnetcore,fsharp,dotenv,serverless,node
 
 artifact
+sqlite.db
+mocks

@@ -8,17 +8,15 @@ import {
   ParseJSONResultsPlugin,
 } from "kysely";
 import { SqlJsDialect } from "kysely-wasm";
-import { DialectFactory } from "../databases/index.js";
 import { settings } from "../settings/index.js";
+import { DialectFactory } from "../system/databases/index.js";
 import type { MyDatabase } from "../tables/index.js";
 
-const plugins_common: KyselyPlugin[] = [
-  new ParseJSONResultsPlugin(),
-  new CamelCasePlugin(),
-];
+const plugins_common: KyselyPlugin[] = [new ParseJSONResultsPlugin()];
 
 const options: Omit<KyselyConfig, "dialect"> = {
   // log: ["query", "error"],
+  log: ["query"],
 };
 
 const createKysely = <T>(dialect: Dialect) => {

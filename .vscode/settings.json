@@ -8,7 +8,7 @@
     "**/Thumbs.db": true,
     "**/.serverless": true,
     "**/artifact": true,
-    "**/dist": true,
+    "**/dist": true
   },
   "[typescript]": {
     "editor.defaultFormatter": "biomejs.biome"

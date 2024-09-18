@@ -137,10 +137,10 @@ export interface s8202OutBlock1 {
   expr_datez8: string;
 
   /** @summary 평가금액 */
-  ass_amtz18: string;
+  ass_amtz18: number;
 
   /** @summary 종목증거금율 */
-  issue_mgamt_ratez10: string | null;
+  issue_mgamt_ratez10: number | null;
 
   /** @summary 평균매도가 */
   medo_slby_amtz18: number;
