@@ -5,7 +5,10 @@ import { sql } from "kysely";
 export const router = new Hono();
 
 router.get("/release", async (c) => {
-  return c.json({ status: "ok" });
+  return c.json({
+    GIT_COMMIT: process.env.GIT_COMMIT,
+    GIT_BRANCH: process.env.GIT_BRANCH,
+  });
 });
 
 router.get("/external", async (c) => {
