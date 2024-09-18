@@ -15,7 +15,11 @@ const upsert_naive = async (db: MyKysely, rows: Table.NewRow[]) => {
   // upsert로 싸우기 싫어서 기존 항목 지우고 추가
   // 어차피 날짜 단위로 통째로 갱신이니까 큰 문제 없을듯?
   const dateKst = first.date_kst;
-  await db.deleteFrom(Table.name).where("date_kst", "=", dateKst).execute();
+  await db
+    .deleteFrom(Table.name)
+    .where("date_kst", "=", dateKst)
+    .where("account_id", "=", first.account_id)
+    .execute();
 
   const result = await db
     .insertInto(Table.name)
