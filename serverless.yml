@@ -10,7 +10,7 @@ provider:
   name: aws
   runtime: nodejs20.x
 
-  region: ap-northeast-2
+  region: ap-northeast-1
   stage: ${opt:stage, 'main'}
 
   memorySize: 512
