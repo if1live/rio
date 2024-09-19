@@ -27,19 +27,13 @@ export const fetch_s8202 = async (
     signal: AbortSignal.timeout(3_000),
   });
 
-  const status = resp.status;
   const text = await resp.text();
-  if (status >= 400) {
-    console.error(text);
-    throw new Error(`Error occurred while fetching s8202: ${status}`);
-  }
-
   const json = JSON.parse(text);
   const data = json as S8202Response | MessageResponse;
+
   if ("message" in data) {
-    console.error(text);
-    console.error(data.message);
-    throw new Error(data.message);
+    throw new Error(`s8202: ${data.message}`);
   }
+
   return data;
 };
