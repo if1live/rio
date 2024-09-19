@@ -1,5 +1,6 @@
 import type { CamelCasedProperties } from "type-fest";
 import type {
+  ErrorResponse,
   MessageResponse,
   S8202Request,
   S8202Response,
@@ -29,10 +30,13 @@ export const fetch_s8202 = async (
 
   const text = await resp.text();
   const json = JSON.parse(text);
-  const data = json as S8202Response | MessageResponse;
+  const data = json as S8202Response | MessageResponse | ErrorResponse;
 
   if ("message" in data) {
     throw new Error(`s8202: ${data.message}`);
+  }
+  if (typeof data.error_type === "string") {
+    throw new Error(`s8202: ${data.error_type}`);
   }
 
   return data;
