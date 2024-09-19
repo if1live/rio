@@ -116,7 +116,15 @@
               <td>{{ entry.product.issue_code }}</td>
 
               <td class="right aligned currency-text">{{ entry.holding.bal_qty }}</td>
-              <td class="right aligned currency-text">{{ entry.holding.prsnt_price | divided_by: 100 }}</td>
+
+              <td class="right aligned currency-text">
+                {% if entry.product.cur_cd == "USD" %}
+                  {{ entry.holding.prsnt_price | divided_by: 100 | to_fixed: 2 }}
+                {% else %}
+                  {{ entry.holding.prsnt_price | divided_by: 100 }}
+                {% endif %}
+              </td>
+
               <td class="right aligned currency-text">{{ entry.holding.byn_amt }}</td>
               <td class="right aligned currency-text">{{ entry.holding.ass_amt }}</td>
 
