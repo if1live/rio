@@ -26,7 +26,7 @@ router.get("/current/s8202/:accountIndex", async (c) => {
     ...c.req.param(),
   });
   const { accountIndex } = data;
-  const result = await NamuhClient.fetch_s8202(accountIndex);
+  const result = await NamuhClient.fetch_s8202({ accountIndex });
   return c.json(result);
 });
 
@@ -38,7 +38,7 @@ router.post("/update", async (c) => {
   try {
     const accounts = R.range(1, settings.ACCOUNT_COUNT + 1);
     const tasks = accounts.map(async (accountIndex) =>
-      NamuhClient.fetch_s8202(accountIndex),
+      NamuhClient.fetch_s8202({ accountIndex }),
     );
     const results = await Promise.all(tasks);
 
