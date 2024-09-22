@@ -17,7 +17,17 @@ export const save = async (
   responses: S8202Response[],
   today: string,
 ) => {
-  const products = responses
+  const product_deposit: ProductTable.NewRow = {
+    issue_code: "deposit",
+    issue_name: "예수금",
+    nat_cd_nm: "",
+    pdt_tp_nm: "예수금",
+    cur_cd: "",
+    iem_mlf_cd: "deposit",
+    bal_type: "예수금",
+    issue_mgamt_rate: null,
+  };
+  const products_real = responses
     .flatMap((entry) => entry.result.s8202OutBlock1)
     .filter((entry) => entry.issue_codez12.length > 0)
     .map((entry) => {
@@ -33,14 +43,39 @@ export const save = async (
       };
       return product;
     });
-  await ProductRepository.upsert(db, products);
+  await ProductRepository.upsert(db, [product_deposit, ...products_real]);
 
   for (let i = 0; i < responses.length; i++) {
     const accountId = i + 1;
     const resp = responses[i];
     assert(resp);
 
-    const items = resp.result.s8202OutBlock1
+    // 예수금도 주식같이 보유한 항목처럼 처리. 테이블 분리하는게 나을듯?
+    const depositNaive = resp.result.s8202OutBlock.dpsit_amt_d2_z18;
+    const item_deposit: DailyHoldingTable.NewRow = {
+      // primary key
+      account_id: accountId,
+      issue_code: "deposit",
+      date_kst: today,
+      // data
+      bal_qty: depositNaive,
+      jan_qty: depositNaive,
+      unstl_qty: 0,
+      prsnt_price: 0,
+      slby_amt: 0,
+      medo_slby_amt: 0,
+      ass_amt: depositNaive,
+      byn_amt: depositNaive,
+      post_lsnpf_amt: 0,
+      lsnpf_amt_won: 0,
+      earn_rate: 0,
+      mrgn_code: "예수금",
+      loan_date: "",
+      expr_date: "",
+    };
+
+    // 보유 항목
+    const items_product = resp.result.s8202OutBlock1
       .filter((entry) => entry.issue_codez12.length > 0)
       .map((entry) => {
         const loan_date = transformNullableDate(entry.loan_datez8);
@@ -76,6 +111,8 @@ export const save = async (
         };
         return row;
       });
+
+    const items = [item_deposit, ...items_product].filter((x) => x.byn_amt > 0);
     await DailyHoldingRepository.upsert(db, items);
   }
 };
