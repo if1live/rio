@@ -26,36 +26,6 @@
   </td>
 
   <td class="right aligned currency-text">
-    <!-- 매입금액 -->
-    {{ holding.byn_amt }}
-  </td>
-
-  <td class="right aligned color-text currency-text">
-    <!-- 평가손익 -->
-    {{ holding.lsnpf_amt_won }}
-  </td>
-
-  <td>
-    <!-- 잔고유형 -->
-    {{ product.pdt_tp_nm }}
-  </td>
-
-</tr>
-
-<tr
-  {% if holding.lsnpf_amt_won > 0 %}
-  class="product-positive"
-  {% elsif holding.lsnpf_amt_won < 0 %}
-  class="product-negative"
-  {% endif %}>
-  <td>
-    <!-- 상품코드 -->
-    {{ product.issue_code }}
-  </td>
-
-  <td>&nbsp;</td>
-
-  <td class="right aligned currency-text">
     <!-- 현재가 -->
     {% assign price = holding.prsnt_price %}
     {% if product.cur_cd == "USD" %}
@@ -66,8 +36,18 @@
   </td>
 
   <td class="right aligned currency-text">
+    <!-- 매입금액 -->
+    {{ holding.byn_amt }}
+  </td>
+
+  <td class="right aligned currency-text">
     <!-- 평가금액 -->
     {{ holding.ass_amt }}
+  </td>
+
+  <td class="right aligned color-text currency-text">
+    <!-- 평가손익 -->
+    {{ holding.lsnpf_amt_won }}
   </td>
 
   <td class="right aligned color-text">
@@ -77,5 +57,13 @@
     {% endif %}
   </td>
 
-  <td>&nbsp;</td>
+  <td>
+    <!-- 상품코드 -->
+    {{ product.issue_code }}
+  </td>
+
+  <td>
+    <!-- 잔고유형 -->
+    {{ product.pdt_tp_nm }}
+  </td>
 </tr>
