@@ -26,13 +26,22 @@
   </td>
 
   <td class="right aligned currency-text">
+    <!-- 매입가 -->
+    {% assign price = holding.slby_amt %}
+    {% if product.cur_cd == "USD" %}
+      {{ price | divided_by: 100 | to_fixed: 2 }}
+    {% elsif product.cur_cd == "" or product.cur_cd == "KRW" %}
+      {{ price | divided_by: 100 | to_fixed: 0 }}
+    {% endif %}
+  </td>
+
+  <td class="right aligned currency-text">
     <!-- 현재가 -->
-    {% if product.cur_cd == "" %}
-      {{ holding.prsnt_price | divided_by: 100 }}
-    {% elsif product.cur_cd == "KRW" %}
-      {{ holding.prsnt_price | divided_by: 100 }}
-    {% elsif product.cur_cd == "USD" %}
-      {{ holding.prsnt_price | divided_by: 100 | to_fixed: 2 }}
+    {% assign price = holding.prsnt_price %}
+    {% if product.cur_cd == "USD" %}
+      {{ price | divided_by: 100 | to_fixed: 2 }}
+    {% elsif product.cur_cd == "" or product.cur_cd == "KRW" %}
+      {{ price | divided_by: 100 | to_fixed: 0 }}
     {% endif %}
   </td>
 
