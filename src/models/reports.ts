@@ -11,16 +11,16 @@ export interface AccountSummary {
   byn_amt: number;
 
   /** @summary 수익율(%) */
-  pft_rt: number;
+  earn_rate: number;
 }
 
 export const AccountSummary = {
-  create(data: Omit<AccountSummary, "pft_rt">) {
-    const pft_rt = ((data.ass_amt - data.byn_amt) / data.byn_amt) * 100;
+  create(data: Omit<AccountSummary, "earn_rate">) {
+    const earn_rate = ((data.ass_amt - data.byn_amt) / data.byn_amt) * 100;
 
     return {
       ...data,
-      pft_rt,
+      earn_rate,
     };
   },
 };

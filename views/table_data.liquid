@@ -1,56 +1,60 @@
 <tr
-  {% if entry.holding.lsnpf_amt_won > 0 %}
+  {% if holding.lsnpf_amt_won > 0 %}
   class="product-positive"
-  {% elsif entry.holding.lsnpf_amt_won < 0 %}
+  {% elsif holding.lsnpf_amt_won < 0 %}
   class="product-negative"
   {% endif %}>
 
   <td>
     <!-- 잔고유형 -->
-    {{ entry.product.pdt_tp_nm }}
+    {{ product.pdt_tp_nm }}
   </td>
 
   <td>
     <!-- 상품명 -->
-    {{ entry.product.issue_name }}
+    {{ issue_name }}
   </td>
 
   <td>
     <!-- 상품코드 -->
-    {{ entry.product.issue_code }}
+    {{ product.issue_code }}
   </td>
 
   <td class="right aligned currency-text">
     <!-- 수량 -->
-    {{ entry.holding.jan_qty }}
+    {{ holding.jan_qty }}
   </td>
 
   <td class="right aligned currency-text">
     <!-- 현재가 -->
-    {% if entry.product.cur_cd == "USD" %}
-      {{ entry.holding.prsnt_price | divided_by: 100 | to_fixed: 2 }}
-    {% else %}
-      {{ entry.holding.prsnt_price | divided_by: 100 }}
+    {% if product.cur_cd == "" %}
+      {{ holding.prsnt_price | divided_by: 100 }}
+    {% elsif product.cur_cd == "KRW" %}
+      {{ holding.prsnt_price | divided_by: 100 }}
+    {% elsif product.cur_cd == "USD" %}
+      {{ holding.prsnt_price | divided_by: 100 | to_fixed: 2 }}
     {% endif %}
   </td>
 
   <td class="right aligned currency-text">
     <!-- 매입금액 -->
-    {{ entry.holding.byn_amt }}
+    {{ holding.byn_amt }}
   </td>
 
   <td class="right aligned currency-text">
     <!-- 평가금액 -->
-    {{ entry.holding.ass_amt }}
+    {{ holding.ass_amt }}
   </td>
 
   <td class="right aligned color-text currency-text">
     <!-- 평가손익 -->
-    {{ entry.holding.lsnpf_amt_won }}
+    {{ holding.lsnpf_amt_won }}
   </td>
 
   <td class="right aligned color-text">
     <!-- 수익률 -->
-    {{ entry.holding.earn_rate | round: 2 }}
+    {% if holding.earn_rate %}
+      {{ holding.earn_rate | round: 2 }}
+    {% endif %}
   </td>
 </tr>

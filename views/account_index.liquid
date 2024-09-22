@@ -18,54 +18,30 @@
         {% render 'table_header.liquid'
           , label: "종합" %}
       </thead>
-
       <tbody>
-        <tr
-          {% if summary.lsnpf_amt_won > 0 %}
-          class="product-positive"
-          {% elsif summary.lsnpf_amt_won < 0 %}
-          class="product-negative"
-          {% endif %}>
-
-          <td></td>
-          <td>종합</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td class="right aligned currency-text">{{ summary.byn_amt }}</td>
-          <td class="right aligned currency-text">{{ summary.ass_amt }}</td>
-          <td class="right aligned color-text currency-text">{{ summary.lsnpf_amt_won }}</td>
-          <td class="right aligned color-text">{{ summary.pft_rt | round: 2 }}</td>
-        </tr>
+        {% render 'table_data.liquid'
+          , product: summary
+          , holding: summary
+          , issue_name: "종합" }
+        %}
       </tbody>
 
       <thead>
-        <tr>
-          {% render 'table_header.liquid'
-            , label: "계좌별" %}
-        </tr>
+        {% render 'table_header.liquid'
+          , label: "계좌별" %}
       </thead>
 
       <tbody>
         {% for report in reports %}
           {% assign summary = report.summary %}
-          <tr
-            {% if summary.lsnpf_amt_won > 0 %}
-            class="product-positive"
-            {% elsif summary.lsnpf_amt_won < 0 %}
-            class="product-negative"
-            {% endif %}>
-
-            <td>요약</td>
-            <td>계좌 {{ report.accountId }}</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td class="right aligned currency-text">{{ summary.byn_amt }}</td>
-            <td class="right aligned currency-text">{{ summary.ass_amt }}</td>
-            <td class="right aligned color-text currency-text">{{ summary.lsnpf_amt_won }}</td>
-            <td class="right aligned color-text">{{ summary.pft_rt | round: 2 }}</td>
-          </tr>
+          {% capture issue_name %}
+                    계좌 {{ report.accountId }}
+                  {% endcapture %}
+          {% render 'table_data.liquid'
+            , product: summary
+            , holding: summary
+            , issue_name: issue_name }
+          %}
         {% endfor %}
       </tbody>
 
@@ -82,7 +58,9 @@
         <tbody>
           {% for entry in snapshots %}
             {% render 'table_data.liquid'
-              , entry: entry %}
+              , product: entry.product
+              , holding: entry.holding
+              , issue_name: entry.product.issue_name %}
           {% endfor %}
         </tbody>
       {% endfor %}
@@ -90,10 +68,12 @@
   </div>
 
   <script>
-    const currencyElements = document.querySelectorAll('.currency-text');
-    for(const currencyElement of currencyElements ) {
-      const v = Number.parseFloat(currencyElement.textContent);
-      currencyElement.textContent = v.toLocaleString();
-    }
+            const currencyElements = document.querySelectorAll('.currency-text');
+            for(const currencyElement of currencyElements ) {
+              const v = Number.parseFloat(currencyElement.textContent);
+              if(!Number.isNaN(v)) {
+                currencyElement.textContent = v.toLocaleString();
+              }
+            }
   </script>
 {% endblock %}
