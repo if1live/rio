@@ -23,7 +23,7 @@ export const save = async (
     nat_cd_nm: "",
     pdt_tp_nm: "예수금",
     cur_cd: "",
-    iem_mlf_cd: "deposit",
+    iem_mlf_cd: "",
     bal_type: "예수금",
     issue_mgamt_rate: null,
   };
