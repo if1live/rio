@@ -15,17 +15,8 @@
     <!-- 테이블 규격으로 정렬하고 싶다 -->
     <table class="ui celled compact selectable unstackable table">
       <thead>
-        <tr>
-          <th>종합</th>
-          <th>상품명</th>
-          <th>상품코드</th>
-          <th>수량</th>
-          <th>현재가</th>
-          <th>매입금액</th>
-          <th>평가금액</th>
-          <th>평가손익</th>
-          <th>수익률</th>
-        </tr>
+        {% render 'table_header.liquid'
+          , label: "종합" %}
       </thead>
 
       <tbody>
@@ -50,15 +41,8 @@
 
       <thead>
         <tr>
-          <th>계좌별</th>
-          <th>상품명</th>
-          <th>상품코드</th>
-          <th>수량</th>
-          <th>현재가</th>
-          <th>매입금액</th>
-          <th>평가금액</th>
-          <th>평가손익</th>
-          <th>수익률</th>
+          {% render 'table_header.liquid'
+            , label: "계좌별" %}
         </tr>
       </thead>
 
@@ -87,79 +71,18 @@
 
       {% for report in reports %}
         {% assign snapshots = report.snapshots %}
+        {% capture label %}
+          잔고유형 {{ report.accountId }}
+        {% endcapture %}
 
         <thead>
-          <tr>
-            <th>잔고유형 {{ report.accountId }}</th>
-            <th>상품명</th>
-            <th>상품코드</th>
-            <th>수량</th>
-            <th>현재가</th>
-            <th>매입금액</th>
-            <th>평가금액</th>
-            <th>평가손익</th>
-            <th>수익률</th>
-          </tr>
+          {% render 'table_header.liquid'
+            , label: label %}
         </thead>
-
         <tbody>
           {% for entry in snapshots %}
-            <tr
-              {% if entry.holding.lsnpf_amt_won > 0 %}
-              class="product-positive"
-              {% elsif entry.holding.lsnpf_amt_won < 0 %}
-              class="product-negative"
-              {% endif %}>
-
-              <td>
-                <!-- 잔고유형 -->
-                {{ entry.product.pdt_tp_nm }}
-              </td>
-
-              <td>
-                <!-- 상품명 -->
-                {{ entry.product.issue_name }}
-              </td>
-
-              <td>
-                <!-- 상품코드 -->
-                {{ entry.product.issue_code }}
-              </td>
-
-              <td class="right aligned currency-text">
-                <!-- 수량 -->
-                {{ entry.holding.bal_qty }}
-              </td>
-
-              <td class="right aligned currency-text">
-                <!-- 현재가 -->
-                {% if entry.product.cur_cd == "USD" %}
-                  {{ entry.holding.prsnt_price | divided_by: 100 | to_fixed: 2 }}
-                {% else %}
-                  {{ entry.holding.prsnt_price | divided_by: 100 }}
-                {% endif %}
-              </td>
-
-              <td class="right aligned currency-text">
-                <!-- 매입금액 -->
-                {{ entry.holding.byn_amt }}
-              </td>
-
-              <td class="right aligned currency-text">
-                <!-- 평가금액 -->
-                {{ entry.holding.ass_amt }}
-              </td>
-
-              <td class="right aligned color-text currency-text">
-                <!-- 평가손익 -->
-                {{ entry.holding.lsnpf_amt_won }}
-              </td>
-
-              <td class="right aligned color-text">
-                <!-- 수익률 -->
-                {{ entry.holding.earn_rate | round: 2 }}
-              </td>
-            </tr>
+            {% render 'table_data.liquid'
+              , entry: entry %}
           {% endfor %}
         </tbody>
       {% endfor %}
