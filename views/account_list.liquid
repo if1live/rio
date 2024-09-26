@@ -1,0 +1,20 @@
+{% layout "layouts/base.liquid" %}
+
+{% block content %}
+  <div class="ui container">
+    <div class="ui breadcrumb">
+      <a class="section" href="/">Rio</a>
+      <i class="right angle icon divider"></i>
+      <a class="section">Account</a>
+    </div>
+
+    <h2>DB</h2>
+    <ul>
+      {% for date in items %}
+        <li>
+          <a href="/account/history/{{ date }}">{{ date }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

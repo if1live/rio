@@ -16,3 +16,7 @@ indent_style = space
 [*.{ts,js}]
 indent_size = 2
 indent_style = space
+
+[*.liquid]
+indent_size = 2
+indent_style = space

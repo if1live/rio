@@ -137,7 +137,7 @@ export const load = async (
 ): Promise<{
   summary: AccountSummary;
   reports: AccountDailyReport[];
-  createdAt: Date;
+  createdAt: Date | undefined;
 }> => {
   // db에서 재구성 테스트
   const holdings = await DailyHoldingRepository.findByDate(db, today);
@@ -188,8 +188,9 @@ export const load = async (
   });
 
   // 보유 상품은 한번에 갱신하니까 시간 아무거나 써도 된다
+  // 시간이 없으면 db에 기록된게 없는 날
   const createdAtNaive = holdings[0]?.created_at as Date | string | undefined;
-  const createdAt = createdAtNaive ? new Date(createdAtNaive) : new Date();
+  const createdAt = createdAtNaive ? new Date(createdAtNaive) : undefined;
 
   return { summary, reports, createdAt };
 };

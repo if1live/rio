@@ -2,6 +2,14 @@
 
 {% block content %}
   <div class="ui container">
+    <div class="ui breadcrumb">
+      <a class="section" href="/">Rio</a>
+      <i class="right angle icon divider"></i>
+      <a class="section" href="/account/index">Account</a>
+      <i class="right angle icon divider"></i>
+      <div class="active section">{{ dateKst }}</div>
+    </div>
+
     <h1>나무증권 요약: {{ dateKst }}</h1>
 
     <dl>

@@ -12,8 +12,28 @@ export const router = new Hono();
 router.get("/index", async (c) => {
   const dateKst = deriveDateKst(new Date());
 
+  const founds = await db
+    .selectFrom("daily_holding")
+    .select("date_kst")
+    .distinct()
+    .orderBy("date_kst desc")
+    .execute();
+  const items = founds.map((x) => x.date_kst);
+
+  const html = engine.renderFile("account_list", { dateKst, items });
+  return c.html(html);
+});
+
+router.get("/today", async (c) => {
+  const dateKst = deriveDateKst(new Date());
+  const nextUrl = `/account/history/${dateKst}`;
+  return c.redirect(nextUrl);
+});
+
+router.get("/history/:dateKst", async (c) => {
+  const dateKst = c.req.param("dateKst");
   const data = await BalanceService.load(db, dateKst);
-  const html = engine.renderFile("account_index", { ...data, dateKst });
+  const html = engine.renderFile("account_detail", { ...data, dateKst });
   return c.html(html);
 });
 
