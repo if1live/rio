@@ -137,6 +137,7 @@ export const load = async (
 ): Promise<{
   summary: AccountSummary;
   reports: AccountDailyReport[];
+  createdAt: Date;
 }> => {
   // db에서 재구성 테스트
   const holdings = await DailyHoldingRepository.findByDate(db, today);
@@ -153,6 +154,7 @@ export const load = async (
     R.unique(),
   );
 
+  // 계좌별로 보고서
   const reports = accountIds.map((accountId) => {
     const founds = holdings.filter((x) => x.account_id === accountId);
     const snapshots = founds.map((found) => {
@@ -178,11 +180,16 @@ export const load = async (
     };
   });
 
+  // 종합 보고서
   const summary = AccountSummary.create({
     lsnpf_amt_won: R.sumBy(reports, (x) => x.summary.lsnpf_amt_won),
     ass_amt: R.sumBy(reports, (x) => x.summary.ass_amt),
     byn_amt: R.sumBy(reports, (x) => x.summary.byn_amt),
   });
 
-  return { summary, reports };
+  // 보유 상품은 한번에 갱신하니까 시간 아무거나 써도 된다
+  const createdAtNaive = holdings[0]?.created_at as Date | string | undefined;
+  const createdAt = createdAtNaive ? new Date(createdAtNaive) : new Date();
+
+  return { summary, reports, createdAt };
 };

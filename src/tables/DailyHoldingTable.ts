@@ -1,4 +1,10 @@
-import type { Insertable, Kysely, Selectable } from "kysely";
+import {
+  type ColumnType,
+  type Insertable,
+  type Kysely,
+  type Selectable,
+  sql,
+} from "kysely";
 import type { SnakeCase } from "type-fest";
 
 /*
@@ -80,6 +86,8 @@ export interface Table {
    * @example 20240913
    */
   expr_date: string | null;
+
+  created_at: ColumnType<Date, string | undefined, never>;
 }
 
 export type Row = Selectable<Table>;
@@ -108,4 +116,7 @@ export const prepare = (db: Kysely<{ [name]: Table }>) =>
     .addColumn("mrgn_code", "text")
     .addColumn("expr_date", "text")
     .addColumn("loan_date", "text")
+    .addColumn("created_at", "text", (col) =>
+      col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull(),
+    )
     .addPrimaryKeyConstraint(`${name}_primary_key`, [...primaryKey]);

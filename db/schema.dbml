@@ -91,6 +91,9 @@ Table rio_daily_holding {
     // 20240913 -> 2024-09-13
     expr_date varchar(10)
 
+    // created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at timestamptz
+
     indexes {
         (date_kst, account_id, issue_code) [pk]
     }

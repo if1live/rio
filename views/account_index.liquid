@@ -4,6 +4,14 @@
   <div class="ui container">
     <h1>나무증권 요약: {{ dateKst }}</h1>
 
+    <dl>
+      <dt>UTC</dt>
+      <dd>{{ createdAt | date: "%Y-%m-%dT%H:%M:%S:%LZ" }}</dd>
+
+      <dt>KST</dt>
+      <dd>{{ createdAt | date: "%Y-%m-%d %H:%M:%S", -540 }}</dd>
+    </dl>
+
     <button
       class="ui small button"
       hx-post="/account/update"
@@ -35,8 +43,8 @@
         {% for report in reports %}
           {% assign summary = report.summary %}
           {% capture issue_name %}
-                    계좌 {{ report.accountId }}
-                  {% endcapture %}
+            계좌 {{ report.accountId }}
+          {% endcapture %}
           {% render 'table_data.liquid'
             , product: summary
             , holding: summary
@@ -78,12 +86,12 @@
   <br/>
 
   <script>
-            const currencyElements = document.querySelectorAll('.currency-text');
-            for(const currencyElement of currencyElements ) {
-              const v = Number.parseFloat(currencyElement.textContent);
-              if(!Number.isNaN(v)) {
-                currencyElement.textContent = v.toLocaleString();
-              }
-            }
+    const currencyElements = document.querySelectorAll('.currency-text');
+    for(const currencyElement of currencyElements ) {
+      const v = Number.parseFloat(currencyElement.textContent);
+      if(!Number.isNaN(v)) {
+        currencyElement.textContent = v.toLocaleString();
+      }
+    }
   </script>
 {% endblock %}
