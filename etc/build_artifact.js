@@ -32,6 +32,7 @@ const opts = {
     "sql.js",
     "better-sqlite3",
     "mysql2",
+    "livereload",
     // aws-sdk v3 client
     // aws-sdk v3 core
   ],

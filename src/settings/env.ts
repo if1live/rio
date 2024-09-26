@@ -28,3 +28,5 @@ const findRootPath_dev = (): string => {
 export const rootPath = process.env.LAMBDA_TASK_ROOT
   ? findRootPath_lambda()
   : findRootPath_dev();
+
+export const viewPath = path.join(rootPath, "views");

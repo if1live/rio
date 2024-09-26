@@ -1,7 +1,22 @@
 import { type FunctionDefinition, standalone } from "serverless-standalone";
 import * as http_main from "./handlers/http_main.js";
 import { db } from "./instances/index.js";
+import { settings } from "./settings/index.js";
 import { DailyHoldingTable, ProductTable } from "./tables/tables.js";
+
+async function main_livereload() {
+  const livereload = await import("livereload");
+  const liveServer = livereload.createServer(
+    {
+      exts: ["html", "css", "liquid"],
+    },
+    () => console.log("livereload running..."),
+  );
+  liveServer.watch([settings.viewPath]);
+}
+if (settings.NODE_ENV === "development") {
+  await main_livereload();
+}
 
 const stage = "dev";
 const definitions: FunctionDefinition[] = [
