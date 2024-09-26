@@ -47,10 +47,10 @@ Table rio_daily_holding {
     issue_code varchar(12)
 
     // 잔고수량
-    bal_qty integer
+    bal_qty numeric
 
     // 잔량
-    jan_qty integer
+    jan_qty numeric
 
     // 미결제량
     unstl_qty integer
