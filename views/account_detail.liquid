@@ -20,16 +20,18 @@
       <dd>{{ createdAt | date: "%Y-%m-%d %H:%M:%S", -540 }}</dd>
     </dl>
 
-    <button
-      class="ui small button"
-      hx-post="/account/update"
-      hx-target="#result-update">
-      update
-      <span class="htmx-indicator">
-        <i class="spinner icon"></i>
-      </span>
-    </button>
-    <div id="result-update"></div>
+    {% if isToday %}
+      <button
+        class="ui small button"
+        hx-post="/account/update"
+        hx-target="#result-update">
+        update
+        <span class="htmx-indicator">
+          <i class="spinner icon"></i>
+        </span>
+      </button>
+      <div id="result-update"></div>
+    {% endif %}
 
     <!-- 테이블 규격으로 정렬하고 싶다 -->
     <table class="ui celled very compact selectable unstackable table">

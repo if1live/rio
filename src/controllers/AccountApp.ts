@@ -32,8 +32,13 @@ router.get("/today", async (c) => {
 
 router.get("/history/:dateKst", async (c) => {
   const dateKst = c.req.param("dateKst");
+  const todayKst = deriveDateKst(new Date());
   const data = await BalanceService.load(db, dateKst);
-  const html = engine.renderFile("account_detail", { ...data, dateKst });
+  const html = engine.renderFile("account_detail", {
+    ...data,
+    dateKst,
+    isToday: dateKst === todayKst,
+  });
   return c.html(html);
 });
 
