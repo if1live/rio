@@ -43,6 +43,7 @@ package:
 functions:
   httpMain:
     handler: artifact/http_main.handler
+    url: true
     package:
       patterns:
         - artifact/http_main.mjs*
