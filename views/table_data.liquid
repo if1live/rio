@@ -20,7 +20,9 @@
     {% assign price = holding.slby_amt %}
     {% if product.cur_cd == "USD" %}
       {{- price | divided_by: 100 | to_fixed: 2 -}}
-    {% elsif product.cur_cd == "" or product.cur_cd == "KRW" %}
+    {% elsif product.cur_cd == "KRW" %}
+      {{- price | divided_by: 100 | to_fixed: 0 -}}
+    {% else %}
       {{- price | divided_by: 100 | to_fixed: 0 -}}
     {% endif %}
   </td>
@@ -30,7 +32,9 @@
     {% assign price = holding.prsnt_price %}
     {% if product.cur_cd == "USD" %}
       {{- price | divided_by: 100 | to_fixed: 2 -}}
-    {% elsif product.cur_cd == "" or product.cur_cd == "KRW" %}
+    {% elsif product.cur_cd == "KRW" %}
+      {{- price | divided_by: 100 | to_fixed: 0 -}}
+    {% else %}
       {{- price | divided_by: 100 | to_fixed: 0 -}}
     {% endif %}
   </td>
