@@ -18,7 +18,7 @@ export const save = async (
   today: string,
 ) => {
   const product_deposit: ProductTable.NewRow = {
-    issue_code: "deposit",
+    issue_code: "ZZ-DEPOSIT",
     issue_name: "예수금",
     nat_cd_nm: "",
     pdt_tp_nm: "예수금",
@@ -55,7 +55,7 @@ export const save = async (
     const item_deposit: DailyHoldingTable.NewRow = {
       // primary key
       account_id: accountId,
-      issue_code: "deposit",
+      issue_code: "ZZ-DEPOSIT",
       date_kst: today,
       // data
       bal_qty: depositNaive,
