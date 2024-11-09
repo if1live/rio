@@ -40,11 +40,6 @@ const options = {
   // iot: { mqtt: "mqtt://artemis:artemis@127.0.0.1:1883" },
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const db0 = db as unknown as any;
-await ProductTable.prepare(db0).execute();
-await DailyHoldingTable.prepare(db0).execute();
-
 const inst = standalone({
   ...options,
   functions: definitions,
