@@ -31,6 +31,8 @@ const opts = {
     // database
     "sql.js",
     "better-sqlite3",
+    "kysely-typeorm",
+    "typeorm",
     "mysql2",
     "livereload",
     // aws-sdk v3 client

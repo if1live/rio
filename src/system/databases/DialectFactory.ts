@@ -1,9 +1,24 @@
 import type SQLitePkg from "better-sqlite3";
-import { MysqlDialect, PostgresDialect, SqliteDialect } from "kysely";
+import {
+  MysqlAdapter,
+  MysqlDialect,
+  MysqlIntrospector,
+  MysqlQueryCompiler,
+  PostgresAdapter,
+  PostgresDialect,
+  PostgresIntrospector,
+  PostgresQueryCompiler,
+  SqliteAdapter,
+  SqliteDialect,
+  SqliteIntrospector,
+  SqliteQueryCompiler,
+} from "kysely";
 import { SqlJsDialect } from "kysely-wasm";
+import type * as KyselyTypeormType from "kysely-typeorm";
 import type MysqlPkg from "mysql2";
 import type PostgresPkg from "pg";
 import type SqlJsPkg from "sql.js";
+import type { DataSource } from "typeorm";
 
 // kysely는 db를 생성하는 함수를 dialect 생성 시점에 넣을 수 있다.
 // database engine import를 await import로 사용하는거때문에
@@ -94,6 +109,67 @@ const create_mysql = (options: MysqlPkg.PoolOptions) => {
 const create_postgres = (options: PostgresPkg.PoolConfig) => {
   const fn = createEngine_postgres(options);
   const dialect = new PostgresDialect({ pool: fn });
+  return dialect;
+};
+
+type KyselySubDialect =
+  KyselyTypeormType.KyselyTypeORMDialectConfig["kyselySubDialect"];
+const create_subdialect = (
+  tag: "sqlite" | "mysql" | "postgres",
+): KyselySubDialect => {
+  switch (tag) {
+    case "sqlite":
+      return {
+        createAdapter: () => new SqliteAdapter(),
+        createIntrospector: (db) => new SqliteIntrospector(db),
+        createQueryCompiler: () => new SqliteQueryCompiler(),
+      };
+    case "mysql":
+      return {
+        createAdapter: () => new MysqlAdapter(),
+        createIntrospector: (db) => new MysqlIntrospector(db),
+        createQueryCompiler: () => new MysqlQueryCompiler(),
+      };
+    case "postgres":
+      return {
+        createAdapter: () => new PostgresAdapter(),
+        createIntrospector: (db) => new PostgresIntrospector(db),
+        createQueryCompiler: () => new PostgresQueryCompiler(),
+      };
+  }
+};
+
+export const create_typeorm = (dataSource: DataSource) => {
+  // dialect 객체 생성 단계에서는 async/await를 쓰고싶지 않다.
+  // kysely-typeorm는 배포에 넣고 싶지 않다.
+  const pkg = require("kysely-typeorm");
+  const KyselyTypeORMDialect = pkg.KyselyTypeORMDialect as new (
+    config: KyselyTypeormType.KyselyTypeORMDialectConfig,
+  ) => KyselyTypeormType.KyselyTypeORMDialect;
+
+  let kyselySubDialect: KyselySubDialect;
+  switch (dataSource.options.type) {
+    case "better-sqlite3":
+    case "sqlite":
+    case "sqljs":
+      kyselySubDialect = create_subdialect("sqlite");
+      break;
+    case "mysql":
+      kyselySubDialect = create_subdialect("mysql");
+      break;
+    case "postgres":
+      kyselySubDialect = create_subdialect("postgres");
+      break;
+    default:
+      throw new Error(`Unsupported database type: ${dataSource.options.type}`);
+  }
+
+  const dialect = new KyselyTypeORMDialect({
+    kyselySubDialect,
+    typeORMDataSource: dataSource,
+    shouldInitializeDataSource: false,
+    shouldDestroyDataSource: true,
+  });
   return dialect;
 };
 
