@@ -1,0 +1,14 @@
+services:
+  pg:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: localhost_dev
+      POSTGRES_PASSWORD: localhost_dev
+      POSTGRES_DB: localhost_dev
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer:latest
+    ports:
+      - 8080:8080

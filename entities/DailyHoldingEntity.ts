@@ -17,16 +17,23 @@ qtyz18는 1000으로 나눠야할수도?. QVOpenApi 기준으로 qtyz16가 일�
 이런식으로 유도되는 값이 존재하지만 DB에는 통째로 저장한다.
 */
 
+/**
+ * primary key를 composite key로 만들 경우 같은 이름으로 전부 채워야한다.
+ * supabase table editor로 테이블 만들면 'rio_daily_holding_pkey' 같은 pk가 된다.
+ * migration할때 오차를 없애려고 테이블 이름을 똑같이 한다.
+ */
+const primaryKeyConstraintName = "rio_daily_holding_pkey";
+
 @Entity({ name: "rio_daily_holding" })
 export class DailyHoldingEntity {
-  @PrimaryColumn({ length: 10 })
+  @PrimaryColumn({ length: 10, primaryKeyConstraintName })
   date_kst!: string;
 
-  @PrimaryColumn()
+  @PrimaryColumn({ primaryKeyConstraintName })
   account_id!: number;
 
   /** @summary 종목번호 */
-  @PrimaryColumn({ length: 12 })
+  @PrimaryColumn({ length: 12, primaryKeyConstraintName })
   issue_code!: string;
 
   /**
@@ -80,7 +87,7 @@ export class DailyHoldingEntity {
   earn_rate!: number;
 
   /** @summary 신용유형 */
-  @Column()
+  @Column({ type: "varchar", length: 4 })
   mrgn_code!: string;
 
   /**

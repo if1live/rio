@@ -15,6 +15,7 @@
     "fix": "biome check --write --unsafe  .",
     "lint": "biome check .",
     "test": "vitest",
+    "typeorm:pg": "typeorm-ts-node-esm -d data-source-pg.ts",
     "typeorm:sqlite": "typeorm-ts-node-esm -d data-source-sqlite.ts"
   },
   "dependencies": {

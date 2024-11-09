@@ -7,10 +7,7 @@ export class ProductEntity {
    * @summary 종목번호
    * @example "259960", "NHKRCMA030", "US78464A8541"
    */
-  @PrimaryColumn({
-    primaryKeyConstraintName: "rio_product_primary_key",
-    length: 12,
-  })
+  @PrimaryColumn({ primaryKeyConstraintName: "rio_product_pkey", length: 12 })
   issue_code!: string;
 
   /**
